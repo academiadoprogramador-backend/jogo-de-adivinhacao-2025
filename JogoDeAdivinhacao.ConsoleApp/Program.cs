@@ -1,4 +1,6 @@
-﻿namespace JogoDeAdivinhacao.ConsoleApp
+﻿using static System.Runtime.InteropServices.JavaScript.JSType;
+
+namespace JogoDeAdivinhacao.ConsoleApp
 {
     internal class Program
     {
@@ -38,8 +40,12 @@
 
                 int numeroSecreto = geradorDeNumeros.Next(1, 21);
 
+                // Declarando o armazenamento de números já chutados
                 int[] numerosChutados = new int[100];
                 int contadorNumerosChutados = 0;
+
+                // Sistema de Pontuação
+                int pontuacao = 1000;
 
                 // lógica do jogo
                 for (int tentativa = 1; tentativa <= totalDeTentativas; tentativa++)
@@ -48,7 +54,8 @@
                     Console.WriteLine("--------------------------------------------");
                     Console.WriteLine($"Tentativa {tentativa} de {totalDeTentativas}");
                     Console.WriteLine("--------------------------------------------");
-
+                    Console.WriteLine("Pontuação: " + pontuacao + " pontos");
+                    Console.WriteLine("--------------------------------------------");
                     Console.Write("Números já chutados: ");
 
                     for (int i = 0; i < numerosChutados.Length; i++)
@@ -98,12 +105,16 @@
                         Console.WriteLine("--------------------------------------------");
                         Console.WriteLine("O número digitado foi maior que o número secreto!");
                         Console.WriteLine("--------------------------------------------");
+
+                        pontuacao -= Math.Abs((numeroDigitado - numeroSecreto) / 2);
                     }
                     else
                     {
                         Console.WriteLine("--------------------------------------------");
                         Console.WriteLine("O número digitado foi menor que o número secreto!");
                         Console.WriteLine("--------------------------------------------");
+
+                        pontuacao -= Math.Abs((numeroDigitado - numeroSecreto) / 2);
                     }
 
                     Console.WriteLine("Pressione ENTER para continuar...");
