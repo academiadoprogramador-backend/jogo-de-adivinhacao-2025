@@ -38,6 +38,9 @@
 
                 int numeroSecreto = geradorDeNumeros.Next(1, 21);
 
+                int[] numerosChutados = new int[100];
+                int contadorNumerosChutados = 0;
+
                 // lógica do jogo
                 for (int tentativa = 1; tentativa <= totalDeTentativas; tentativa++)
                 {
@@ -45,8 +48,43 @@
                     Console.WriteLine("--------------------------------------------");
                     Console.WriteLine($"Tentativa {tentativa} de {totalDeTentativas}");
                     Console.WriteLine("--------------------------------------------");
-                    Console.Write("Digite um número (de 1 à 20) para chutar: ");
-                    int numeroDigitado = Convert.ToInt32(Console.ReadLine());
+
+                    Console.Write("Números já chutados: ");
+
+                    for (int i = 0; i < numerosChutados.Length; i++)
+                    {
+                        if (numerosChutados[i] > 0)
+                            Console.Write(numerosChutados[i] + " ");
+                    }
+
+                    Console.WriteLine();
+                    Console.WriteLine("--------------------------------------------");
+
+                    int numeroDigitado;
+                    bool numeroRepetido;
+
+                    do
+                    {
+                        numeroRepetido = false;
+
+                        Console.Write("Digite um número (de 1 à 20) para chutar: ");
+                        numeroDigitado = Convert.ToInt32(Console.ReadLine());
+
+                        for (int i = 0; i < numerosChutados.Length; i++)
+                        {
+                            if (numerosChutados[i] == numeroDigitado)
+                            {
+                                Console.WriteLine("Você já digitou este número! Aperte ENTER para tentar novamente...");
+                                Console.ReadLine();
+
+                                numeroRepetido = true;
+                                break;
+                            }
+                        }
+                    } while (numeroRepetido == true);
+
+                    numerosChutados[contadorNumerosChutados] = numeroDigitado;
+                    contadorNumerosChutados++;
 
                     if (numeroDigitado == numeroSecreto)
                     {
